@@ -25,4 +25,10 @@ describe("restaurant", function() {
       assert(listadoDeRestaurantes[1].obtenerPuntuacion, 0);
     });
   });
+  describe("calificar", function() {
+    it("Deberia guardar la nueva calificacion en calificaciones", function() {
+      listadoDeRestaurantes[2].calificar(8);
+      assert(listadoDeRestaurantes[2].calificaciones, 8);
+    });
+  });
 });
