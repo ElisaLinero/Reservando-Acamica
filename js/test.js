@@ -15,4 +15,14 @@ describe("restaurant", function() {
       assert(listadoDeRestaurantes[0].horarios.length, 3);
     });
   });
+  describe("obtenerPuntuacion", function() {
+    it("Deberia obtener el promedio de la puntuacion", function() {
+      listadoDeRestaurantes[1].calificar(6, 7, 8);
+      assert(listadoDeRestaurantes[1].obtenerPuntuacion, 7);
+    });
+    it("Deberia obtener O en puntuacion si no tiene calificaciones", function() {
+      listadoDeRestaurantes[1].calificar();
+      assert(listadoDeRestaurantes[1].obtenerPuntuacion, 0);
+    });
+  });
 });
