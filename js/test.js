@@ -32,3 +32,19 @@ describe("restaurant", function() {
     });
   });
 });
+describe("listado", function() {
+  describe("buscarRestaurante", function() {
+    it("Deberia buscar el restaurante por el id en la lista de restaurantes", function() {
+      listado.buscarRestaurante("Bleecker Street Pizza");
+      assert(listadoDeRestaurantes[3].id, "Bleecker Street Pizza");
+    });
+  });
+  describe("obtenerRestaurante", function() {
+    it("Deberia filtrar restaurantes de acuerdo a lo seleccionado en los filtros", function() {
+      listado.obtenerRestaurantes("Pasta", "Roma", "14:30");
+      assert(listadoDeRestaurantes[15].rubro, "Pasta");
+      assert(listadoDeRestaurantes[15].ubicacion, "Roma");
+      assert(listadoDeRestaurantes[15].horarios, "14:30");
+    });
+  });
+});
