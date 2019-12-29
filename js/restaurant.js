@@ -17,12 +17,7 @@ var Restaurant = function(
 };
 
 Restaurant.prototype.reservarHorario = function(horarioReservado) {
-  for (var i = 0; i < this.horarios.length; i++) {
-    if (this.horarios[i] === horarioReservado) {
-      this.horarios.splice(i, 1);
-      return;
-    }
-  }
+  this.horarios = this.horarios.filter(horario => horario !== horarioReservado);
 };
 
 Restaurant.prototype.calificar = function(nuevaCalificacion) {
