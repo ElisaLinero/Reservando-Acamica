@@ -17,10 +17,10 @@ describe("restaurant", function() {
   });
   describe("obtenerPuntuacion", function() {
     it("Deberia obtener el promedio de la puntuacion", function() {
-      listadoDeRestaurantes[1].calificar(6, 7, 8);
+      listadoDeRestaurantes[1].calificar(5, 5, 5);
       assert(listadoDeRestaurantes[1].obtenerPuntuacion, 7);
     });
-    it("Deberia obtener O en puntuacion si no tiene calificaciones", function() {
+    it("Deberia obtener 0 en puntuacion si no tiene calificaciones", function() {
       listadoDeRestaurantes[1].calificar();
       assert(listadoDeRestaurantes[1].obtenerPuntuacion, 0);
     });

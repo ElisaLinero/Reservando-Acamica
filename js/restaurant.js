@@ -30,15 +30,18 @@ Restaurant.prototype.calificar = function(nuevaCalificacion) {
   }
 };
 
+function sumatoria(numeros) {
+  return numeros.reduce((acumulador, valorActual) => acumulador + valorActual);
+}
+
+function promedio(numeros) {
+  return Math.round((sumatoria(numeros) / numeros.length) * 10) / 10;
+}
+
 Restaurant.prototype.obtenerPuntuacion = function() {
   if (this.calificaciones.length === 0) {
     return 0;
   } else {
-    var sumatoria = 0;
-    for (var i = 0; i < this.calificaciones.length; i++) {
-      sumatoria += this.calificaciones[i];
-    }
-    var promedio = sumatoria / this.calificaciones.length;
-    return Math.round(promedio * 10) / 10;
+    return promedio(this.calificaciones);
   }
 };
