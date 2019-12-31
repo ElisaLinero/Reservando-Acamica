@@ -1,69 +1,191 @@
 var assert = chai.assert;
 var expect = chai.expect;
 
-describe("restaurant", function() {
-  describe("reservarHorario", function() {
-    it("Deberia eliminar horario reservado del array", function() {
-      listadoDeRestaurantes[0].reservarHorario("13:00");
-      assert(listadoDeRestaurantes[0].horarios.length, 2);
-    });
-    it("Deberia mantenerse igual el array cuando se reserva un horario que no posee", function() {
-      listadoDeRestaurantes[0].reservarHorario("14:00");
-      assert(listadoDeRestaurantes[0].horarios.length, 3);
-    });
-    it("Deberia mantenerse igual el array cuando no se le pasa ningun parametro a la funcion", function() {
-      listadoDeRestaurantes[0].reservarHorario("");
-      assert(listadoDeRestaurantes[0].horarios.length, 3);
-    });
+describe("reservar horario", function() {
+  it("Deberia eliminar el horario reservado de la lista de horarios del restaurante", function() {
+    var restauranteTest = new Restaurant(
+      1,
+      "TAO Uptown",
+      "Asiática",
+      "Nueva York",
+      ["13:00", "15:30", "18:00"],
+      "../img/asiatica1.jpg",
+      [6, 7, 9, 10, 5]
+    );
+    var horarioAnterior = restauranteTest.horarios.length;
+    restauranteTest.reservarHorario("13:00");
+    expect(restauranteTest.horarios.length).to.equal(horarioAnterior - 1);
   });
-  describe("obtenerPuntuacion", function() {
-    it("Deberia obtener el promedio de la puntuacion", function() {
-      listadoDeRestaurantes[1].calificar(5, 5, 5);
-      assert(listadoDeRestaurantes[1].obtenerPuntuacion, 7);
-    });
-    it("Deberia obtener 0 en puntuacion si no tiene calificaciones", function() {
-      listadoDeRestaurantes[1].calificar();
-      assert(listadoDeRestaurantes[1].obtenerPuntuacion, 0);
-    });
+  it("Deberia mantenerse igual el array cuando se reserva un horario que no posee", function() {
+    var restauranteTest = new Restaurant(
+      1,
+      "TAO Uptown",
+      "Asiática",
+      "Nueva York",
+      ["13:00", "15:30", "18:00"],
+      "../img/asiatica1.jpg",
+      [6, 7, 9, 10, 5]
+    );
+    var horarioAnterior = restauranteTest.horarios.length;
+    restauranteTest.reservarHorario("14:00");
+    expect(restauranteTest.horarios.length).to.eql(horarioAnterior);
   });
-  describe("calificar", function() {
-    it("Deberia guardar la nueva calificacion en calificaciones", function() {
-      listadoDeRestaurantes[2].calificar(8);
-      assert(listadoDeRestaurantes[2].calificaciones, 8);
-    });
-  });
-});
-describe("listado", function() {
-  describe("buscarRestaurante", function() {
-    it("Deberia buscar el restaurante por el id en la lista de restaurantes", function() {
-      listado.buscarRestaurante("Bleecker Street Pizza");
-      assert(listadoDeRestaurantes[3].id, "Bleecker Street Pizza");
-    });
-  });
-  describe("obtenerRestaurante", function() {
-    it("Deberia filtrar restaurantes de acuerdo a lo seleccionado en los filtros", function() {
-      listado.obtenerRestaurantes("Pasta", "Roma", "14:30");
-      assert(listadoDeRestaurantes[15].rubro, "Pasta");
-      assert(listadoDeRestaurantes[15].ubicacion, "Roma");
-      assert(listadoDeRestaurantes[15].horarios, "14:30");
-    });
+  it("Deberia mantenerse igual el array cuando no se le pasa ningun parametro a la funcion", function() {
+    var restauranteTest = new Restaurant(
+      1,
+      "TAO Uptown",
+      "Asiática",
+      "Nueva York",
+      ["13:00", "15:30", "18:00"],
+      "../img/asiatica1.jpg",
+      [6, 7, 9, 10, 5]
+    );
+    var horarioAnterior = restauranteTest.horarios.length;
+    restauranteTest.reservarHorario("");
+    expect(restauranteTest.horarios.length).to.eql(horarioAnterior);
   });
 });
 
+describe("obtenerPuntuacion", function() {
+  it("Deberia obtener el promedio de la puntuacion", function() {
+    var restauranteTest = new Restaurant(
+      1,
+      "TAO Uptown",
+      "Asiática",
+      "Nueva York",
+      ["13:00", "15:30", "18:00"],
+      "../img/asiatica1.jpg",
+      [6, 7, 9, 10, 5]
+    );
+    expect(restauranteTest.obtenerPuntuacion()).to.equal(7.4);
+  });
+
+  it("Deberia obtener 0 en puntuacion si no tiene calificaciones", function() {
+    var restauranteTest = new Restaurant(
+      1,
+      "TAO Uptown",
+      "Asiática",
+      "Nueva York",
+      ["13:00", "15:30", "18:00"],
+      "../img/asiatica1.jpg",
+      [0]
+    );
+    expect(restauranteTest.obtenerPuntuacion()).to.equal(0);
+  });
+});
+
+describe("calificar", function() {
+  it("Deberia guardar la nueva calificacion en calificaciones", function() {
+    var restauranteTest = new Restaurant(
+      1,
+      "TAO Uptown",
+      "Asiática",
+      "Nueva York",
+      ["13:00", "15:30", "18:00"],
+      "../img/asiatica1.jpg",
+      [6, 7, 9, 10, 5]
+    );
+    restauranteTest.calificar(3);
+    expect(restauranteTest.calificaciones).to.eql([6, 7, 9, 10, 5, 3]);
+  });
+});
+
+describe("buscarRestaurante", function() {
+  it("Deberia buscar el restaurante por el id en la lista de restaurantes", function() {
+    var listadoRestosTest = [
+      new Restaurant(
+        1,
+        "TAO Uptown",
+        "Asiática",
+        "Nueva York",
+        ["13:00", "15:30", "18:00"],
+        "../img/asiatica1.jpg",
+        [6, 7, 9, 10, 5]
+      ),
+      new Restaurant(
+        2,
+        "Mandarín Kitchen",
+        "Asiática",
+        "Londres",
+        ["15:00", "14:30", "12:30"],
+        "../img/asiatica2.jpg",
+        [7, 7, 3, 9, 7]
+      )
+    ];
+
+    var restauranteCorrectoTest = new Restaurant(
+      1,
+      "TAO Uptown",
+      "Asiática",
+      "Nueva York",
+      ["13:00", "15:30", "18:00"],
+      "../img/asiatica1.jpg",
+      [6, 7, 9, 10, 5]
+    );
+
+    listadoRestosTest = new Listado(listadoRestosTest);
+
+    expect(listadoRestosTest.buscarRestaurante(1)).to.eql(
+      restauranteCorrectoTest
+    );
+  });
+});
+
+describe("obtenerRestaurante", function() {
+  it("Deberia buscar el restaurante por el id en la lista de restaurantes", function() {
+    var listadoRestosTest = [
+      new Restaurant(
+        1,
+        "TAO Uptown",
+        "Asiática",
+        "Nueva York",
+        ["13:00", "15:30", "18:00"],
+        "../img/asiatica1.jpg",
+        [6, 7, 9, 10, 5]
+      ),
+      new Restaurant(
+        2,
+        "Mandarín Kitchen",
+        "Asiática",
+        "Londres",
+        ["15:00", "14:30", "12:30"],
+        "../img/asiatica2.jpg",
+        [7, 7, 3, 9, 7]
+      )
+    ];
+
+    listadoRestosTest = new Listado(listadoRestosTest);
+
+    var listadoFiltradoTest = [
+      new Restaurant(
+        1,
+        "TAO Uptown",
+        "Asiática",
+        "Nueva York",
+        ["13:00", "15:30", "18:00"],
+        "../img/asiatica1.jpg",
+        [6, 7, 9, 10, 5]
+      )
+    ];
+    expect(
+      listado.obtenerRestaurantes("Asiática", "Nueva York", "13:00")
+    ).to.eql(listadoFiltradoTest);
+  });
+});
 // se aplica TDD para el objeto reserva
 
-describe("reserva", function() {
-  it("Deberia calcular correctamente el precio base", function() {
-    var reserva1 = new reserva(new Date(2018, 7, 24, 11, 00), 8, 350, "DES1");
-    expect(reserva1.CalcularPrecioBase()).to.equal(2800);
+describe("Precio Base Por Reserva", () => {
+  it("Si realizo una reserva valida, obtengo el precio base", () => {
+    var reserva1 = new Reserva(new Date(2018, 7, 24, 11, 00), 8, 350, "DES1");
+
+    expect(reserva1.calcularPrecioBase()).to.equal(2800);
   });
-  it("Deberia calcular correctamente su  precio final", function() {
-    var reserva2 = new reserva(
-      new Date(2018, 7, 27, 14, 100),
-      2,
-      150,
-      "DES200"
-    );
-    expect(reserva2.calcularPrecioFinal()).to.equal(100);
+});
+
+describe("Precio Total por Reserva", () => {
+  it("Si realizo una reserva valida, obtengo el precio final", () => {
+    var reserva1 = new Reserva(new Date(2018, 7, 24, 11, 00), 8, 350, "DES1");
+
+    expect(reserva1.calcularPrecioFinal()).to.equal(2450);
   });
 });
