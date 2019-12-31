@@ -1,4 +1,5 @@
 var assert = chai.assert;
+var expect = chai.expect;
 
 describe("restaurant", function() {
   describe("reservarHorario", function() {
@@ -46,5 +47,23 @@ describe("listado", function() {
       assert(listadoDeRestaurantes[15].ubicacion, "Roma");
       assert(listadoDeRestaurantes[15].horarios, "14:30");
     });
+  });
+});
+
+// se aplica TDD para el objeto reserva
+
+describe("reserva", function() {
+  it("Deberia calcular correctamente el precio base", function() {
+    var reserva1 = new reserva(new Date(2018, 7, 24, 11, 00), 8, 350, "DES1");
+    expect(reserva1.CalcularPrecioBase()).to.equal(2800);
+  });
+  it("Deberia calcular correctamente su  precio final", function() {
+    var reserva2 = new reserva(
+      new Date(2018, 7, 27, 14, 100),
+      2,
+      150,
+      "DES200"
+    );
+    expect(reserva2.calcularPrecioFinal()).to.equal(100);
   });
 });
